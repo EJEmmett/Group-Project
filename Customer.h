@@ -1,39 +1,32 @@
-//Customer.h
-
-#include "Person.h"
 #include <string>
-using namespace std;
+#include "Person.h"
 
 #ifndef CUSTOMER_H
 #define CUSTOMER_H
 
-class Customer : public Person
-{
+class Customer : public Person{
 	public:
-			Customer();
-			void setInfo(string, string, string, bool);
-			string print();
+        Customer();
+		void setInfo(std::string, std::string, std::string, bool);
+		std::string print() const;
 	private:
-		string cusID;
+		std::string cusID;
 		//ticket : key
 		//invoice : key
-		boolean flag;
+		bool flag;
 };
 
-Customer::Customer()
-{
+Customer::Customer(){
 	setInfo("", "", "", false);
 }
 
-void Customer::setInfo(string f, string l, string id, bool fl)
-{
+void Customer::setInfo(std::string f, std::string l, std::string id, bool fl){
 	setName(f, l);
 	cusID = id;
 	flag = fl;
 }
 
-string Customer::print()
-{
+std::string Customer::print() const{
 	return first + " " + last + " " + cusID;
 }
 

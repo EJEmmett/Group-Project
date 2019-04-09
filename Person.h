@@ -1,29 +1,23 @@
-//Person.h
-
 #include <string>
-using namespace std;
 
 #ifndef PERSON_H
 #define PERSON_H
 
-class Person
-{
+class Person{
 	public:
-			Person();
-			void setName(string, string);
-			virtual string print() = 0; //pure virtual for polymorphism
+        Person();
+		void setName(std::string, std::string);
+		virtual std::string print() const = 0; //pure virtual for polymorphism
 	protected:
-		string first;
-		string last;
+		std::string first;
+		std::string last;
 };
 
-Person::Person()
-{
+Person::Person(){
 	setName("", "");
 }
 
-void Person::setName (string f, string l)
-{
+void Person::setName(std::string f, std::string l){
 	first = f;
 	last = l;
 }
