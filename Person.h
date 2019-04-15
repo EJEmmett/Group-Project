@@ -17,15 +17,4 @@ class Person
 		string last;
 };
 
-Person::Person()
-{
-	setName("", "");
-}
-
-void Person::setName (string f, string l)
-{
-	first = f;
-	last = l;
-}
-
 #endif
