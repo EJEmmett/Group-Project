@@ -7,18 +7,21 @@
 template<typename T>
 class List{
 	public:
+        struct node{
+		    T data;
+		    node* next;
+        };
+
 		List();
+		~List();
 		void addNode(T);
+        T getNode(int);
         float sumCost();
 		float sumHours();
+		node* getList() const;
 		void printList();
 
-	private:
-		struct node{
-			T data;
-			node* next;
-		};
-
+    private:
 		node* head;
 		node* curr;
 		node* temp;
@@ -29,6 +32,11 @@ List<T>::List(){
 	head = NULL;
 	curr = NULL;
 	temp = NULL;
+}
+
+template<typename T>
+List<T>::~List(){
+	delete head;
 }
 
 template<typename T>
@@ -43,6 +51,22 @@ void List<T>::addNode(T dat){
 		curr->next = n;
 	}else
 		head = n;
+}
+
+template<typename T>
+T List<T>::getNode(int i){
+    int temp = 0;
+	curr = head;
+	while(temp != i){
+		curr = curr->next;
+		i++;
+	}
+	return curr->data;
+}
+
+template<typename T>
+typename List<T>::node* List<T>::getList() const{
+	return head;
 }
 
 template<typename T>

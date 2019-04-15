@@ -7,27 +7,25 @@
 class Customer : public Person{
 	public:
         Customer();
-		void setInfo(std::string, std::string, std::string, bool);
+        Customer(std::string vars[5]);
+		void setInfo(std::string, std::string, std::string);
 		std::string print() const;
-	private:
-		std::string cusID;
-		//ticket : key
-		//invoice : key
-		bool flag;
 };
 
 Customer::Customer(){
-	setInfo("", "", "", false);
+	setInfo("", "", "");
 }
 
-void Customer::setInfo(std::string f, std::string l, std::string id, bool fl){
-	setName(f, l);
-	cusID = id;
-	flag = fl;
+Customer::Customer(std::string vars[5]){
+    setInfo(vars[0], vars[1], vars[2]);
+}
+
+void Customer::setInfo(std::string f, std::string l, std::string id){
+	setName(f, l, id);
 }
 
 std::string Customer::print() const{
-	return first + " " + last + " " + cusID;
+	return first + " " + last + " " + id;
 }
 
 #endif

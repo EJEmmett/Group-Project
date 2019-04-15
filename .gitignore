@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+# Project Files
+*.layout
+*.dev
+*.win
+*.cbp
