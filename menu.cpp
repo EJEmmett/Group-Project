@@ -114,7 +114,7 @@ int managerMenu() {
     cout <<"\t\t\t\t\t\t  MANAGER MENU   				 \n"
          <<"\t\t\t\t\t\t================ 				 \n"
          <<"\t\t\t\t\t1. Add new ticket 				 \n"
-         <<"\t\t\t\t\t5. Exit							 \n"
+         <<"\t\t\t\t\t2. Exit							 \n"
          <<"\t\t\t\tEnter your choice: ";
 
     cin >>choice;
