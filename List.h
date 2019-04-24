@@ -15,7 +15,6 @@ class List{
 		List();
 		~List();
 		void addNode(T);
-        T getNode(int);
         float sumCost();
 		float sumHours();
 		node* getList() const;
@@ -36,6 +35,12 @@ List<T>::List(){
 
 template<typename T>
 List<T>::~List(){
+	curr = head;
+	while(curr){
+		temp = curr->next;
+		delete curr;
+		curr = temp;
+	}
 	delete head;
 }
 
@@ -51,17 +56,6 @@ void List<T>::addNode(T dat){
 		curr->next = n;
 	}else
 		head = n;
-}
-
-template<typename T>
-T List<T>::getNode(int i){
-    int temp = 0;
-	curr = head;
-	while(temp != i){
-		curr = curr->next;
-		i++;
-	}
-	return curr->data;
 }
 
 template<typename T>
