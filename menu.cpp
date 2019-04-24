@@ -56,8 +56,6 @@ int loginMenu() {
     return choice;
 }
 
-
-
 int menu() {
     int choice;
     cout <<"\t\t\t\t\t\t       MENU   				     \n"
