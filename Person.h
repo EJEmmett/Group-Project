@@ -13,30 +13,13 @@ class Person{
             return id == rhs.getId();
         }
 		virtual std::string print() const = 0; //pure virtual for polymorphism
+		std::string getPass() const;
+
+
 	protected:
 	    std::string username;
 	    std::string password;
-		std::string first;
-		std::string last;
 		std::string id;
 };
-
-Person::Person(){
-	setName("", "", "");
-}
-
-std::string Person::getId() const{
-    return id;
-}
-
-bool Person::compare(std::string u, std::string p) const{
-    return (username==u && password==p);
-}
-
-void Person::setName(std::string f, std::string l, std::string _id){
-	first = f;
-	last = l;
-	id = _id;
-}
 
 #endif
