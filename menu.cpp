@@ -1,226 +1,237 @@
 #include <iostream>
 #include <ctime>
+#include"Ticket.h"
 //#include "invoice.cpp"
 
 
 using namespace std;
 
+Person* login(List<Person*>& users) {
+    string username;
+    string password;
+    cout << "Username: " << endl;
+    cin.clear();
+    fflush(stdin);
+    getline(cin, username);
+    cout<<"Password: "<<endl;
+    getline(cin, password);
+    return users.getNode(username, password);
+}
+
+Person* create(List<Person*>& users) {
+    int acctType;
+    string username;
+    string password;
+    cout << "Username: " << endl;
+    cin.clear();
+    fflush(stdin);
+    getline(cin, username);
+    cout<<"Password: "<<endl;
+    getline(cin, password);
+    cout<<"Account Type: \n"
+        <<"1. Customer \n"
+        <<"2. Employee \n"
+        <<"Enter Here: ";
+    cin >> acctType;
+    Person* user;
+    if(acctType == 1)
+        user = new Customer();
+    else
+        user = new Employee();
+    users.addNode(user);
+
+    return user;
+}
+
+int loginMenu() {
+    int choice;
+    system("cls");
+    cout <<"\t\t\t\t\t\t       MENU   				     \n"
+         <<"\t\t\t\t\t\t================ 				 \n"
+         <<"\t\t\t\t\t1. Login 				             \n"
+         <<"\t\t\t\t\t2. Create Account                  \n"
+         <<"\t\t\t\t\t3. Exit							 \n"
+         <<"\t\t\t\tEnter your choice: ";
+    cin >>choice;
+    return choice;
+}
 
 
-int menu(){
-	int choice;
-	cout <<"\t\t\t\t\t\t       MENU   				     \n"
-		 <<"\t\t\t\t\t\t================ 				 \n"
-    	 <<"\t\t\t\t\t1. I am a customer 				 \n"
-    	 <<"\t\t\t\t\t2. I am an employee     			 \n"
-    	 <<"\t\t\t\t\t3. I am a manager					 \n"
-    	 <<"\t\t\t\t\t4. Exit							 \n"
-    	 <<"\t\t\t\tEnter your choice: ";
+
+int menu() {
+    int choice;
+    cout <<"\t\t\t\t\t\t       MENU   				     \n"
+         <<"\t\t\t\t\t\t================ 				 \n"
+         <<"\t\t\t\t\t1. I am a customer 				 \n"
+         <<"\t\t\t\t\t2. I am an employee     			 \n"
+         <<"\t\t\t\t\t3. I am a manager					 \n"
+         <<"\t\t\t\t\t4. Exit							 \n"
+         <<"\t\t\t\tEnter your choice: ";
 
     cin >>choice;
     return(choice);
 }
 
-int customerMenu(){
-	int choice;
-	cout <<"\t\t\t\t\t\t  CUSTOMER MENU   			 \n"
-		 <<"\t\t\t\t\t\t================ 			 \n"
-    	 <<"\t\t\t\t\t1. Add new ticket 			 \n"
-    	 <<"\t\t\t\t\t2. Exit						 \n"
-    	 <<"\t\t\t\tEnter your choice: ";
+int customerMenu() {
+    int choice;
+    cout <<"\t\t\t\t\t\t  CUSTOMER MENU   			 \n"
+         <<"\t\t\t\t\t\t================ 			 \n"
+         <<"\t\t\t\t\t1. Add new ticket 			 \n"
+         <<"\t\t\t\t\t2. Exit						 \n"
+         <<"\t\t\t\tEnter your choice: ";
 
     cin >>choice;
     return(choice);
 }
 
-int employeeMenu(){
-	int choice;
-	cout <<"\t\t\t\t\t\t  EMPLOYEE MENU   				 \n"
-		 <<"\t\t\t\t\t\t================ 				 \n"
-    	 <<"\t\t\t\t\t1. View ticket in progress 		 \n"
-    	 <<"\t\t\t\t\t2. Exit							 \n"
-    	 <<"\t\t\t\tEnter your choice: ";
+int employeeMenu() {
+    int choice;
+    cout <<"\t\t\t\t\t\t  EMPLOYEE MENU   				 \n"
+         <<"\t\t\t\t\t\t================ 				 \n"
+         <<"\t\t\t\t\t1. View ticket in progress 		 \n"
+         <<"\t\t\t\t\t2. Exit							 \n"
+         <<"\t\t\t\tEnter your choice: ";
 
     cin >>choice;
     return(choice);
 }
 
-int ticketMenu(){
-	int choice;
-	cout <<"\t\t\t\t\t\t  TICKET MENU   				 \n"
-		 <<"\t\t\t\t\t\t================ 				 \n"
-    	 <<"\t\t\t\t\t1. Veiw all tickets				 \n"
-    	 <<"\t\t\t\t\t1. Add Repair						 \n"
-    	 <<"\t\t\t\t\t2. Exit							 \n"
-    	 <<"\t\t\t\tEnter your choice: ";
+int ticketMenu() {
+    int choice;
+    cout <<"\t\t\t\t\t\t  TICKET MENU   				 \n"
+         <<"\t\t\t\t\t\t================ 				 \n"
+         <<"\t\t\t\t\t1. Veiw all tickets				 \n"
+         <<"\t\t\t\t\t1. Add Repair						 \n"
+         <<"\t\t\t\t\t2. Exit							 \n"
+         <<"\t\t\t\tEnter your choice: ";
 
     cin >>choice;
     return(choice);
 }
 
-int managerMenu(){
-	int choice;
-	cout <<"\t\t\t\t\t\t  MANAGER MENU   				 \n"
-		 <<"\t\t\t\t\t\t================ 				 \n"
-    	 <<"\t\t\t\t\t1. Add new ticket 				 \n"
-    	 <<"\t\t\t\t\t5. Exit							 \n"
-    	 <<"\t\t\t\tEnter your choice: ";
+int managerMenu() {
+    int choice;
+    cout <<"\t\t\t\t\t\t  MANAGER MENU   				 \n"
+         <<"\t\t\t\t\t\t================ 				 \n"
+         <<"\t\t\t\t\t1. Add new ticket 				 \n"
+         <<"\t\t\t\t\t5. Exit							 \n"
+         <<"\t\t\t\tEnter your choice: ";
 
     cin >>choice;
     return(choice);
-
-
 }
 
-void cusMenu(){
-	int option;
-	string name;
-	string currName;
-	string comment;
-	time_t now;
-	struct tm nowLocal;
-	now=time(NULL);
-	nowLocal=*localtime(&now);
-					do {
-						option = customerMenu();
-						switch(option){
-
-							case 1: system("CLS");
-							cout<<"What is your name? "<<endl;
-							getline(cin, name);
-							cout<<"What is the ticket for? "<<endl;
-							getline(cin, comment);
-							cout<<name<<" entered a ticket on "<<nowLocal.tm_mon+1<<"/"<<nowLocal.tm_mday<<"/"<<nowLocal.tm_year+1900<<" at "<<nowLocal.tm_hour<<":"<<nowLocal.tm_min<<":"<<nowLocal.tm_sec<<endl;
-							cout<<"Description: "<<comment<<endl;
-							break;
-							case 2:
-							cout<<"Bye"<<endl;
-							break;
-						}
-					} while (option !=2);
+void cusMenu(Customer currUser, List<Ticket>& tickets) {
+    int option;
+    string name;
+    string currName;
+    string comment;
+    do {
+        option = customerMenu();
+        switch(option) {
+        case 1:
+            system("CLS");
+            cout << "What is your name? " << endl;
+            cin.clear();
+            fflush(stdin);
+            getline(cin, name);
+            cout<<"What is the ticket for? "<<endl;
+            getline(cin, comment);
+            cout<<"Ticket Processed."<<endl;
+            tickets.addNode(Ticket(currUser, comment));
+                            break;
+                        case 2:
+                                cout<<"Bye"<<endl;
+                                break;
+            }
+    } while (option !=2);
 }
 
 void ticMenu() {
-	int option;
-	do {
-		option = ticketMenu();
-		switch(option){
-			case 1:
-				//for(int i;i<totTicket;i++){
-				//	cout<<ticket(i)<<endl;
-				//}
-			break;
-			case 2:
-				system("CLS");
-				cout<<"Bye"<<endl;
-			break;
-		}
-	} while (option !=2);
+    int option;
+    do {
+        option = ticketMenu();
+        switch(option) {
+        case 1:
+            //for(int i;i<totTicket;i++){
+            //  cout<<ticket(i)<<endl;
+            //}
+            break;
+        case 2:
+            system("CLS");
+            cout<<"Bye"<<endl;
+            break;
+        }
+    } while (option !=2);
 }
 
-void empMenu() {
-	int option;
-	do {
-		option = employeeMenu();
-		switch(option){
-			case 1:
+void empMenu(Person* currUser, List<Ticket>& tickets) {
+    int option;
+    do {
+        option = employeeMenu();
+        switch(option) {
+        case 1:
 
-			break;
-			case 2:
-				system("CLS");
-				cout<<"Bye"<<endl;
-			break;
-		}
-	} while (option !=2);
+            break;
+        case 2:
+            system("CLS");
+            cout<<"Bye"<<endl;
+            break;
+        }
+    } while (option !=2);
 }
 
 void manMenu() {
-	int option;
-	do {
-		option = managerMenu();
-		switch(option){
-			case 1:
+    int option;
+    do {
+        option = managerMenu();
+        switch(option) {
+        case 1:
 
-			break;
-			case 2:
-				system("CLS");
-				cout<<"Bye"<<endl;
-			break;
-		}
-	} while (option !=2);
+            break;
+        case 2:
+            system("CLS");
+            cout<<"Bye"<<endl;
+            break;
+        }
+    } while (option !=2);
 }
 
 int main(int argc, char** argv) {
+    List<Person*> users;
+    List<Ticket> tickets;
+    Person* currentUser = nullptr;
+    int option;
+    do {
+        system("CLS");
+        option = loginMenu();
+        system("CLS");
+        switch(option) {
+            case 1:
+                if(Person* temp = login(users))
+                    currentUser = temp;
+                else{
+                    cout << "User not found.";
+                    system("pause");
+                }
+                break;
+        case 2:
+            currentUser = create(users);
+            break;
+        case 3:
+            cout<<"BYE!!"<<endl;
+            break;
+        }
+    } while (option != 3 && !currentUser);
 
-	int option;
-	do {
-		option = menu();
-		switch(option){
+    if(option == 3)
+        return 0;
 
-					case 1: system("CLS");
-					cusMenu();
-					break;
-					case 2: system("CLS");
-					empMenu();
-					break;
-					case 3: system("CLS");
-					manMenu();
-					break;
-					case 4: system("CLS");
-					cout<<"BYE!!"<<endl;
-					break;
-				}
-	}while (option != 4);
+    if(auto temp = dynamic_cast<Customer*>(currentUser))
+        cusMenu(*temp, tickets);
+    else
+        empMenu(currentUser, tickets);
+
 }
-
-
-	/*
-	string name;
-	string currName;
-	string comment;
-	time_t now;
-	struct tm nowLocal;
-	now=time(NULL);
-	nowLocal=*localtime(&now);
-	do {
-		option = menu();
-		switch(option){
-
-					case 1: cout<<"Please enter your name: "<<endl;
-							cin>>name;
-							cout<<"What is the ticket for: "<<endl;
-							cin>>comment;
-							cout<<name<<" entered a ticket on "<<nowLocal.tm_mon+1<<"/"<<nowLocal.tm_mday<<"/"<<nowLocal.tm_year+1900<<" at "<<nowLocal.tm_hour<<":"<<nowLocal.tm_min<<":"<<nowLocal.tm_sec<<endl;
-							cout<<"Description: "<<comment<<endl;
-					break;
-					case 2: cout<<"What is the name on the ticket:"<<endl;
-							cin>>currName;
-							for(int i; i<totTicket; i++){
-								if(totTicket.name == currName){
-									cout<<"The ticket under this name is: "<<ticket(i)<<endl;
-								}
-							}
-					break;
-					case 3: for(int i; i<totTicket; i++){
-								cout<<ticket(i)<<endl;
-							}
-					break;
-					break;
-					case 4:cout<<"What is the name on the invoice: "<<endl;
-							cin<<currName;
-							for(int i; i<totInvoice; i++){
-								if(totInvoice.name == currName){
-									cout<<"The invoice under this name is: "<<invoice(i)<<endl;
-								}
-							}
-					break;
-					case 5:
-						cout<<"Bye!!";
-					break;
-
-					default: cout<<option<<" is an invalid option!\n";
-		}
-	}while (option != 4);
-	*/
 
 

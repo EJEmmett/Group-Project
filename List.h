@@ -15,10 +15,13 @@ class List{
 		List();
 		~List();
 		void addNode(T);
+		int getPos();
+		bool inList(T);
         float sumCost();
 		float sumHours();
 		node* getList() const;
 		void printList();
+		T getNode(std::string, std::string);
 
     private:
 		node* head;
@@ -59,6 +62,29 @@ void List<T>::addNode(T dat){
 }
 
 template<typename T>
+int List<T>::getPos(){
+    curr = head;
+    int count = 0;
+	while(curr){
+	    count++;
+        curr = curr->next;
+	}
+	return count;
+}
+
+template<typename T>
+bool List<T>::inList(T dat){
+    curr = head;
+	while(curr){
+        if(curr->data == dat)
+            return true;
+        else
+            curr = curr->next;
+	}
+	return false;
+}
+
+template<typename T>
 typename List<T>::node* List<T>::getList() const{
 	return head;
 }
@@ -70,6 +96,18 @@ void List<T>::printList(){
 		std::cout << curr -> data << std::endl;
 		curr = curr->next;
 	}
+}
+
+template<>
+Person* List<Person*>::getNode(std::string u, std::string p){
+    curr = head;
+	while(curr){
+        if(curr->data->compare(u, p))
+            return curr->data;
+        else
+            curr = curr->next;
+	}
+	return nullptr;
 }
 
 template<>

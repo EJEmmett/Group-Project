@@ -1,6 +1,7 @@
 #include <ctime>
 #include <optional>
 #include "Invoice.h"
+#include "List.h"
 #include "Repairs.h"
 
 #ifndef TICKET_H
@@ -24,13 +25,13 @@ class Ticket{
 		std::string status;
 		List<Repairs*> repairsCompleted;
 		Customer client;
-		std::string equipment;
+		std::string description;
 		std::optional<Invoice> invo;
 };
 
-Ticket::Ticket(Customer c, std::string e){
+Ticket::Ticket(Customer c, std::string d){
 	client = c;
-	equipment = e;
+	description = d;
 	timeEntered = std::time(nullptr);
 	status = "Not Completed";
 }
