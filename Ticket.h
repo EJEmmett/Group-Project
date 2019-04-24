@@ -1,5 +1,6 @@
 #include <ctime>
 #include <optional>
+#include <iostream>
 #include "Invoice.h"
 #include "List.h"
 #include "Repairs.h"
@@ -13,6 +14,12 @@ class Ticket {
     Ticket(Customer, std::string);
 
     void addRepair(Employee, float, std::time_t, std::string); // int hoursWorked
+
+    virtual bool operator==(const Ticket& rhs) const{
+        return false;
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, const Ticket& obj);
 
     void listRepairs();
     std::string getCompletion() const;

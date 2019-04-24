@@ -24,3 +24,7 @@ std::string Repairs::print() {
            "Work Completed: " + workCompleted +
            "\nHours Worked: " + fHW.str() + "\n";
 }
+
+std::ostream& operator<<(std::ostream& os, const Repairs& r){
+    return os;
+}

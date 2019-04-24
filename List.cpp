@@ -1,6 +1,7 @@
+#include "List.h"
 #include <iostream>
 #include "Repairs.h"
-#include "List.h"
+#include "Person.h"
 #include "Ticket.h"
 
 template<typename T>
@@ -112,3 +113,7 @@ void List<Repairs*>::printList() {
         curr = curr->next;
     }
 }
+
+template class List<Person*>;
+template class List<Repairs*>;
+template class List<Ticket>;

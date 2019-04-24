@@ -1,5 +1,6 @@
 #include <sstream>
 #include <iomanip>
+#include <iostream>
 #include "Employee.h"
 
 #ifndef REPAIRS_H
@@ -11,6 +12,12 @@ class Repairs {
     Employee getEmployee() const;
     float getHours() const;
     std::string print();
+
+    virtual bool operator==(const Repairs& rhs) const{
+        return false;
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, const Repairs& r);
 
   private:
     Employee emp;

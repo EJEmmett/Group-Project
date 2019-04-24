@@ -42,3 +42,7 @@ Invoice Ticket::getInvoice() {
         invo = Invoice(client, repairsCompleted.sumCost(), repairsCompleted.sumHours());
     return *invo;
 }
+
+std::ostream& operator<<(std::ostream& os, const Ticket& obj){
+    return os;
+}
