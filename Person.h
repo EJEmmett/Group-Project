@@ -13,6 +13,7 @@ class Person{
             return id == rhs.getId();
         }
 		virtual std::string print() const = 0; //pure virtual for polymorphism
+		std::string getUsername() const;
 		std::string getPass() const;
 
 

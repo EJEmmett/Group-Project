@@ -47,7 +47,7 @@ std::string Ticket::getDescription() const{
 }
 
 std::string Ticket::print() const{
-    return "Username: " + client.print() + "\nDescription: " + description;
+    return "Username: " + client.getUsername() + "\nDescription: " + description;
 }
 
 Invoice Ticket::getInvoice() {

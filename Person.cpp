@@ -18,6 +18,10 @@ void Person::setName(std::string u, std::string p, std::string _id){
 	id = _id;
 }
 
+std::string Person::getUsername() const{
+    return username;
+}
+
 std::string Person::getPass() const{
 	return password;
 }
