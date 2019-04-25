@@ -46,6 +46,10 @@ std::string Ticket::getDescription() const{
     return description;
 }
 
+std::string Ticket::print() const{
+    return "Username: " + client.print() + "\nDescription: " + description;
+}
+
 Invoice Ticket::getInvoice() {
     if(!invo)
         invo = new Invoice(client, repairsCompleted.sumCost(), repairsCompleted.sumHours());

@@ -114,6 +114,15 @@ void List<Repairs*>::printList() {
     }
 }
 
+template<>
+void List<Ticket*>::printList() {
+    curr = head;
+    while(curr) {
+        std::cout << curr -> data -> print() << std::endl;
+        curr = curr->next;
+    }
+}
+
 template class List<Person*>;
 template class List<Repairs*>;
 template class List<Ticket*>;

@@ -27,6 +27,7 @@ class Ticket {
     Customer getClient() const;
     std::string getStatus() const;
     Invoice getInvoice();
+    std::string print() const;
 
   private:
     double timeEntered;

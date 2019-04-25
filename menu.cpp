@@ -179,8 +179,8 @@ int ticketMenu() {
     cout <<"\t\t\t\t\t\t  TICKET MENU   				 \n"
          <<"\t\t\t\t\t\t================ 				 \n"
          <<"\t\t\t\t\t1. Veiw all tickets				 \n"
-         <<"\t\t\t\t\t1. Add Repair						 \n"
-         <<"\t\t\t\t\t2. Exit							 \n"
+         <<"\t\t\t\t\t2. Add Repair						 \n"
+         <<"\t\t\t\t\t3. Exit							 \n"
          <<"\t\t\t\tEnter your choice: ";
 
     cin >>choice;
@@ -212,15 +212,13 @@ void cusMenu(Customer currUser, List<Ticket*>* tickets) {
     } while (option !=2);
 }
 
-void ticMenu() {
+void ticMenu(List<Ticket*>* tickets) {
     int option;
     do {
         option = ticketMenu();
         switch(option) {
         case 1:
-            //for(int i;i<totTicket;i++){
-            //  cout<<ticket(i)<<endl;
-            //}
+                tickets->printList();
             break;
         case 2:
             system("CLS");
@@ -236,7 +234,7 @@ void empMenu(Person* currUser, List<Ticket*>* tickets) {
         option = employeeMenu();
         switch(option) {
         case 1:
-
+            ticMenu(tickets);
             break;
         case 2:
             system("CLS");
