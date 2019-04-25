@@ -84,36 +84,36 @@ Person* List<Person*>::getNode(std::string u, std::string p) {
 }
 
 template<>
-float List<Repairs>::sumCost() {
+float List<Repairs*>::sumCost() {
     float sum = 0;
     curr = head;
     while(curr) {
-        sum += curr->data.getHours() * curr->data.getEmployee().getRate();
+        sum += curr->data->getHours() * curr->data->getEmployee().getRate();
         curr = curr->next;
     }
     return sum;
 }
 
 template<>
-float List<Repairs>::sumHours() {
+float List<Repairs*>::sumHours() {
     float sum = 0;
     curr = head;
     while(curr) {
-        sum += curr->data.getHours();
+        sum += curr->data->getHours();
         curr = curr->next;
     }
     return sum;
 }
 
 template<>
-void List<Repairs>::printList() {
+void List<Repairs*>::printList() {
     curr = head;
     while(curr) {
-        std::cout << curr -> data.print() << std::endl;
+        std::cout << curr -> data->print() << std::endl;
         curr = curr->next;
     }
 }
 
 template class List<Person*>;
-template class List<Repairs>;
-template class List<Ticket>;
+template class List<Repairs*>;
+template class List<Ticket*>;

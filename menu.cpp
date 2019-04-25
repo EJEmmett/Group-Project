@@ -24,7 +24,6 @@ void loadUsers(List<Person*>* users) {
             users->addNode(new Customer(vars));
         else
             users->addNode(new Employee(vars));
-
     }
     file.close();
 }
@@ -42,7 +41,7 @@ void saveUsers(List<Person*>* users) {
     file.close();
 }
 
-void loadTickets(List<Ticket>* tickets, List<Person*>* users) {
+void loadTickets(List<Ticket*>* tickets, List<Person*>* users) {
     ifstream file("tickets.txt");
     if(!file)
         return;
@@ -52,10 +51,10 @@ void loadTickets(List<Ticket>* tickets, List<Person*>* users) {
         string word;
         int temp = 0;
         while(getline(ss, word, '|'))
-            vars[temp++] = word;
-        Ticket t = Ticket(*dynamic_cast<Customer*>(users->inList(vars[0])), vars[1]);
+            vars[temp++] =  word;
+        Ticket* t = new Ticket(*dynamic_cast<Customer*>(users->inList(vars[0])), vars[1]);
 
-        stringstream ss2(word);
+        stringstream ss2(vars[2]);
         string individuals;
         temp = 0;
         while(getline(ss2, individuals, ']')){
@@ -64,7 +63,7 @@ void loadTickets(List<Ticket>* tickets, List<Person*>* users) {
             temp = 0;
             while(getline(ss3, repairItems, '\\'))
                 vars[temp++] = repairItems;
-            t.addRepair(Employee(vars), stoi(vars[4]), stof(vars[5]), vars[6]);
+            t->addRepair(Employee(vars), stoi(vars[4]), stof(vars[5]), vars[6]);
         }
 
         tickets->addNode(t);
@@ -72,27 +71,29 @@ void loadTickets(List<Ticket>* tickets, List<Person*>* users) {
     file.close();
 }
 
-void saveTickets(List<Ticket>* tickets) {
+void saveTickets(List<Ticket*>* tickets) {
     ofstream file("tickets.txt", ios::trunc);
 
     auto curr = tickets->getList();
     while(curr) {
-        Ticket t = curr->data;
-        string fin = t.getClient().getId() + "|" + t.getDescription();
+        Ticket* t = curr->data;
+        string fin = t->getClient().getId() + "|" + t->getDescription();
         string re = "";
-        auto repair = t.getRepairs()->getList();
+        auto repair = t->getRepairs().getList();
         while(repair){
-            string items = repair->data.getRep();
+            string items = repair->data->getRep();
             replace(items.begin(), items.end(), ' ', '/');
             re += items + "]";
+            repair = repair->next;
         }
-        fin += "]" + re + "\n";
+        fin += "|" + re + "\n";
         file << fin;
+        curr = curr->next;
     }
     file.close();
 }
 
-Person* login(List<Person*>& users) {
+Person* login(List<Person*>* users) {
     string username;
     string password;
     cout << "Username: " << endl;
@@ -101,10 +102,10 @@ Person* login(List<Person*>& users) {
     getline(cin, username);
     cout<<"Password: "<<endl;
     getline(cin, password);
-    return users.getNode(username, password);
+    return users->getNode(username, password);
 }
 
-Person* create(List<Person*>& users) {
+Person* create(List<Person*>* users) {
     int acctType;
     string username;
     string password;
@@ -121,7 +122,7 @@ Person* create(List<Person*>& users) {
     cin >> acctType;
     Person* user;
     if(acctType == 1)
-        user = new Customer(username, password, string("Cus"+to_string(users.getPos())));
+        user = new Customer(username, password, string("Cus"+to_string(users->getPos())));
     else{
         int grade;
         float rate;
@@ -129,10 +130,10 @@ Person* create(List<Person*>& users) {
         cin >> rate;
         cout<<"Grade: ";
         cin >> grade;
-        user = new Employee(username, password, string("Emp"+to_string(users.getPos())), grade, rate);
+        user = new Employee(username, password, string("Emp"+to_string(users->getPos())), grade, rate);
     }
-    users.addNode(user);
-    saveUsers(&users);
+    users->addNode(user);
+    saveUsers(users);
     return user;
 }
 
@@ -147,20 +148,6 @@ int loginMenu() {
          <<"\t\t\t\tEnter your choice: ";
     cin >>choice;
     return choice;
-}
-
-int menu() {
-    int choice;
-    cout <<"\t\t\t\t\t\t       MENU   				     \n"
-         <<"\t\t\t\t\t\t================ 				 \n"
-         <<"\t\t\t\t\t1. I am a customer 				 \n"
-         <<"\t\t\t\t\t2. I am an employee     			 \n"
-         <<"\t\t\t\t\t3. I am a manager					 \n"
-         <<"\t\t\t\t\t4. Exit							 \n"
-         <<"\t\t\t\tEnter your choice: ";
-
-    cin >>choice;
-    return(choice);
 }
 
 int customerMenu() {
@@ -200,19 +187,7 @@ int ticketMenu() {
     return(choice);
 }
 
-int managerMenu() {
-    int choice;
-    cout <<"\t\t\t\t\t\t  MANAGER MENU   				 \n"
-         <<"\t\t\t\t\t\t================ 				 \n"
-         <<"\t\t\t\t\t1. Add new ticket 				 \n"
-         <<"\t\t\t\t\t2. Exit							 \n"
-         <<"\t\t\t\tEnter your choice: ";
-
-    cin >>choice;
-    return(choice);
-}
-
-void cusMenu(Customer currUser, List<Ticket>& tickets) {
+void cusMenu(Customer currUser, List<Ticket*>* tickets) {
     int option;
     string name;
     string currName;
@@ -222,14 +197,13 @@ void cusMenu(Customer currUser, List<Ticket>& tickets) {
         switch(option) {
         case 1:
             system("CLS");
-            cout << "What is your name? " << endl;
             cin.clear();
             fflush(stdin);
-            getline(cin, name);
-            cout<<"What is the ticket for? "<<endl;
+            cout<<"What is the ticket for? ";
             getline(cin, comment);
             cout<<"Ticket Processed."<<endl;
-            tickets.addNode(Ticket(currUser, comment));
+            tickets->addNode(new Ticket(currUser, comment));
+            saveTickets(tickets);
             break;
         case 2:
             cout<<"Bye"<<endl;
@@ -256,7 +230,7 @@ void ticMenu() {
     } while (option !=2);
 }
 
-void empMenu(Person* currUser, List<Ticket>& tickets) {
+void empMenu(Person* currUser, List<Ticket*>* tickets) {
     int option;
     do {
         option = employeeMenu();
@@ -272,25 +246,9 @@ void empMenu(Person* currUser, List<Ticket>& tickets) {
     } while (option !=2);
 }
 
-void manMenu() {
-    int option;
-    do {
-        option = managerMenu();
-        switch(option) {
-        case 1:
-
-            break;
-        case 2:
-            system("CLS");
-            cout<<"Bye"<<endl;
-            break;
-        }
-    } while (option !=2);
-}
-
 int main(int argc, char** argv) {
     List<Person*> users;
-    List<Ticket> tickets;
+    List<Ticket*> tickets;
     loadUsers(&users);
     loadTickets(&tickets, &users);
     Person* currentUser = nullptr;
@@ -301,7 +259,7 @@ int main(int argc, char** argv) {
         system("CLS");
         switch(option) {
         case 1:
-            if(Person* temp = login(users))
+            if(Person* temp = login(&users))
                 currentUser = temp;
             else {
                 cout << "User not found.";
@@ -309,7 +267,7 @@ int main(int argc, char** argv) {
             }
             break;
         case 2:
-            currentUser = create(users);
+            currentUser = create(&users);
             break;
         case 3:
             cout<<"BYE!!"<<endl;
@@ -321,9 +279,9 @@ int main(int argc, char** argv) {
         return 0;
 
     if(auto temp = dynamic_cast<Customer*>(currentUser))
-        cusMenu(*temp, tickets);
+        cusMenu(*temp, &tickets);
     else
-        empMenu(currentUser, tickets);
+        empMenu(currentUser, &tickets);
 
 }
 
