@@ -309,6 +309,7 @@ int main(int argc, char** argv) {
         cusMenu(temp, &tickets);
     else
         empMenu(currentUser, &tickets);
+    return 0;
 }
 
 
