@@ -5,7 +5,7 @@ Employee::Employee() {
 }
 
 Employee::Employee(std::string vars[7]) {
-    setInfo(vars[0], vars[1], vars[2], std::stoi(vars[3]), std::stof(vars[4]));
+    setInfo(vars[0], vars[4], vars[2], std::stoi(vars[2]), std::stof(vars[3]));
 }
 
 Employee::Employee(std::string u, std::string p, std::string id, int i, float cost) {

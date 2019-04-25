@@ -1,7 +1,96 @@
 #include <iostream>
-#include "IO.cpp"
+#include <fstream>
+#include <algorithm>
+#include "Customer.h"
+#include "Employee.h"
+#include "Ticket.h"
 
 using namespace std;
+
+void loadUsers(List<Person*>* users) {
+    ifstream file("users.txt");
+    if(!file)
+        return;
+
+    string vars[5], line;
+    while(getline(file, line)) {
+        stringstream ss(line);
+        string word;
+        int temp = 0;
+        while(getline(ss, word, '|'))
+            vars[temp++] = word;
+
+        if(vars[1].find("Cus") != string::npos)
+            users->addNode(new Customer(vars));
+        else
+            users->addNode(new Employee(vars));
+
+    }
+    file.close();
+}
+
+void saveUsers(List<Person*>* users) {
+    ofstream file("users.txt", ios::trunc);
+
+    auto curr = users->getList();
+    while(curr) {
+        string id = curr->data->print();
+        replace(id.begin(), id.end(), ' ', '|');
+        file << id << "|" << curr->data->getPass() << "|" << "\n";
+        curr = curr->next;
+    }
+    file.close();
+}
+
+void loadTickets(List<Ticket>* tickets, List<Person*>* users) {
+    ifstream file("tickets.txt");
+    if(!file)
+        return;
+    string vars[7], line;
+    while(getline(file, line)) {
+        stringstream ss(line);
+        string word;
+        int temp = 0;
+        while(getline(ss, word, '|'))
+            vars[temp++] = word;
+        Ticket t = Ticket(*dynamic_cast<Customer*>(users->inList(vars[0])), vars[1]);
+
+        stringstream ss2(word);
+        string individuals;
+        temp = 0;
+        while(getline(ss2, individuals, ']')){
+            stringstream ss3(individuals);
+            string repairItems;
+            temp = 0;
+            while(getline(ss3, repairItems, '\\'))
+                vars[temp++] = repairItems;
+            t.addRepair(Employee(vars), stoi(vars[4]), stof(vars[5]), vars[6]);
+        }
+
+        tickets->addNode(t);
+    }
+    file.close();
+}
+
+void saveTickets(List<Ticket>* tickets) {
+    ofstream file("tickets.txt", ios::trunc);
+
+    auto curr = tickets->getList();
+    while(curr) {
+        Ticket t = curr->data;
+        string fin = t.getClient().getId() + "|" + t.getDescription();
+        string re = "";
+        auto repair = t.getRepairs()->getList();
+        while(repair){
+            string items = repair->data.getRep();
+            replace(items.begin(), items.end(), ' ', '/');
+            re += items + "]";
+        }
+        fin += "]" + re + "\n";
+        file << fin;
+    }
+    file.close();
+}
 
 Person* login(List<Person*>& users) {
     string username;
@@ -32,7 +121,7 @@ Person* create(List<Person*>& users) {
     cin >> acctType;
     Person* user;
     if(acctType == 1)
-        user = new Customer(username, password, string("Cus"+users.getPos()));
+        user = new Customer(username, password, string("Cus"+to_string(users.getPos())));
     else{
         int grade;
         float rate;
@@ -40,7 +129,7 @@ Person* create(List<Person*>& users) {
         cin >> rate;
         cout<<"Grade: ";
         cin >> grade;
-        user = new Employee(username, password, string("Emp"+users.getPos()), grade, rate);
+        user = new Employee(username, password, string("Emp"+to_string(users.getPos())), grade, rate);
     }
     users.addNode(user);
     saveUsers(&users);
