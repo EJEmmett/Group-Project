@@ -36,6 +36,7 @@ void List<T>::addNode(T dat) {
 
 template<typename T>
 T List<T>::getNode(int p){
+    curr = head;
     int count = 0;
     while(curr){
         if(count == p)
@@ -48,6 +49,7 @@ T List<T>::getNode(int p){
 
 template<typename T>
 void List<T>::setNode(int p, T dat){
+    curr = head;
     int count = 0;
     while(curr){
         if(count == p)

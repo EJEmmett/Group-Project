@@ -221,17 +221,21 @@ void repairMenu(Person* currUser, List<Ticket*>* tickets){
     std::string wC;
     cout << "Enter here: ";
     cin >> option;
-    Ticket* t = tickets->getNode(option-1);
-    cout << "Hours Worked: ";
-    cin >> hW;
-    cout << "Time Worked: ";
-    cin >> tW;
-    cout << "Work Completed: ";
-    cin.clear();
-    fflush(stdin);
-    getline(cin, wC);
-    t->addRepair(dynamic_cast<Employee*>(currUser), hW, tW, wC);
-    tickets->setNode(option-1, t);
+    if(Ticket* t = tickets->getNode(option-1)){
+        cout << "Hours Worked: ";
+        cin >> hW;
+        cout << "Time Worked: ";
+        cin >> tW;
+        cout << "Work Completed: ";
+        cin.clear();
+        fflush(stdin);
+        getline(cin, wC);
+        t->addRepair(dynamic_cast<Employee*>(currUser), hW, tW, wC);
+        tickets->setNode(option-1, t);
+    }else{
+        cout << "Ticket not found";
+    }
+    saveTickets(tickets);
 }
 
 void ticMenu(Person* currUser, List<Ticket*>* tickets) {
