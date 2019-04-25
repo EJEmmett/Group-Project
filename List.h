@@ -17,7 +17,7 @@ class List {
     ~List();
     void addNode(T);
     int getPos();
-    bool inList(T);
+    T inList(std::string);
     float sumCost();
     float sumHours();
     node* getList() const;

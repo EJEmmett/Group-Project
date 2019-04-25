@@ -19,11 +19,15 @@ Ticket::Ticket(Customer c, std::string d) {
 }
 
 void Ticket::addRepair(Employee emp, float hoursWorked, double timeWorked, std::string workCompleted) {
-    repairsCompleted.addNode(new Repairs(emp, hoursWorked, timeWorked, workCompleted));
+    repairsCompleted->addNode(Repairs(emp, hoursWorked, timeWorked, workCompleted));
+}
+
+List<Repairs>* Ticket::getRepairs() const{
+    return repairsCompleted;
 }
 
 void Ticket::listRepairs() {
-    repairsCompleted.printList();
+    repairsCompleted->printList();
 }
 
 std::string Ticket::getCompletion() const {
@@ -38,9 +42,13 @@ std::string Ticket::getStatus() const {
     return status;
 }
 
+std::string Ticket::getDescription() const{
+    return description;
+}
+
 Invoice Ticket::getInvoice() {
     if(!invo)
-        invo = new Invoice(client, repairsCompleted.sumCost(), repairsCompleted.sumHours());
+        invo = new Invoice(client, repairsCompleted->sumCost(), repairsCompleted->sumHours());
     return *invo;
 }
 

@@ -12,6 +12,8 @@ class Ticket {
     Ticket(Customer, std::string);
 
     void addRepair(Employee, float, double, std::string); // int hoursWorked
+    List<Repairs>* getRepairs() const;
+
 
     virtual bool operator==(const Ticket& rhs) const{
         return false;
@@ -21,6 +23,7 @@ class Ticket {
 
     void listRepairs();
     std::string getCompletion() const;
+    std::string getDescription() const;
     Customer getClient() const;
     std::string getStatus() const;
     Invoice getInvoice();
@@ -29,7 +32,7 @@ class Ticket {
     double timeEntered;
     double timeCompleted;
     std::string status;
-    List<Repairs*> repairsCompleted;
+    List<Repairs>* repairsCompleted;
     Customer client;
     std::string description;
     Invoice* invo;

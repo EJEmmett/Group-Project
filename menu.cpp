@@ -1,8 +1,5 @@
 #include <iostream>
-#include <ctime>
-#include"Ticket.h"
-//#include "invoice.cpp"
-
+#include "IO.cpp"
 
 using namespace std;
 
@@ -46,7 +43,7 @@ Person* create(List<Person*>& users) {
         user = new Employee(username, password, string("Emp"+users.getPos()), grade, rate);
     }
     users.addNode(user);
-
+    saveUsers(&users);
     return user;
 }
 
@@ -205,6 +202,8 @@ void manMenu() {
 int main(int argc, char** argv) {
     List<Person*> users;
     List<Ticket> tickets;
+    loadUsers(&users);
+    loadTickets(&tickets, &users);
     Person* currentUser = nullptr;
     int option;
     do {

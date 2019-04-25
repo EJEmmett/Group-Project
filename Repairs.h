@@ -8,10 +8,12 @@
 
 class Repairs {
   public:
+    Repairs();
     Repairs(Employee, float, double, std::string);
     Employee getEmployee() const;
     float getHours() const;
     std::string print();
+    std::string getRep() const;
 
     virtual bool operator==(const Repairs& rhs) const{
         return false;
