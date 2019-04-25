@@ -230,7 +230,6 @@ void repairMenu(Person* currUser, List<Ticket*>* tickets){
     cin.clear();
     fflush(stdin);
     getline(cin, wC);
-    cout << t;
     t->addRepair(dynamic_cast<Employee*>(currUser), hW, tW, wC);
     tickets->setNode(option-1, t);
 }
