@@ -20,7 +20,7 @@ std::string Repairs::print() {
     fHW << std::fixed << std::setprecision(2) << hoursWorked;
 
     return "Employee: " + emp.print() +
-           "\nTime Worked: " + std::string(ctime(&timeWorked)) +
+           "\nTime Worked: " + std::to_string(timeWorked) +
            "Work Completed: " + workCompleted +
            "\nHours Worked: " + fHW.str() + "\n";
 }
