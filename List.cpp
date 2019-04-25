@@ -35,6 +35,29 @@ void List<T>::addNode(T dat) {
 }
 
 template<typename T>
+T List<T>::getNode(int p){
+    int count = 0;
+    while(curr){
+        if(count == p)
+            return curr->data;
+        curr = curr->next;
+        count++;
+    }
+    return nullptr;
+}
+
+template<typename T>
+void List<T>::setNode(int p, T dat){
+    int count = 0;
+    while(curr){
+        if(count == p)
+            curr->data = dat;
+        curr = curr->next;
+        count++;
+    }
+}
+
+template<typename T>
 int List<T>::getPos() {
     curr = head;
     int count = 0;
@@ -88,7 +111,7 @@ float List<Repairs*>::sumCost() {
     float sum = 0;
     curr = head;
     while(curr) {
-        sum += curr->data->getHours() * curr->data->getEmployee().getRate();
+        sum += curr->data->getHours() * curr->data->getEmployee()->getRate();
         curr = curr->next;
     }
     return sum;
@@ -116,10 +139,12 @@ void List<Repairs*>::printList() {
 
 template<>
 void List<Ticket*>::printList() {
+    int count = 1;
     curr = head;
     while(curr) {
-        std::cout << curr -> data -> print() << std::endl;
+        std::cout << "#" << count << ". " << curr -> data -> print() << std::endl;
         curr = curr->next;
+        count++;
     }
 }
 

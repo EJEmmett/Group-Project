@@ -18,7 +18,7 @@ Ticket::Ticket(Customer c, std::string d) {
     status = "Not Completed";
 }
 
-void Ticket::addRepair(Employee emp, float hoursWorked, double timeWorked, std::string workCompleted) {
+void Ticket::addRepair(Employee* emp, float hoursWorked, double timeWorked, std::string workCompleted) {
     repairsCompleted.addNode(new Repairs(emp, hoursWorked, timeWorked, workCompleted));
 }
 

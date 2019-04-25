@@ -63,7 +63,7 @@ void loadTickets(List<Ticket*>* tickets, List<Person*>* users) {
             temp = 0;
             while(getline(ss3, repairItems, '\\'))
                 vars[temp++] = repairItems;
-            t->addRepair(Employee(vars), stoi(vars[4]), stof(vars[5]), vars[6]);
+            t->addRepair(new Employee(vars), stoi(vars[4]), stof(vars[5]), vars[6]);
         }
 
         tickets->addNode(t);
@@ -178,7 +178,7 @@ int ticketMenu() {
     int choice;
     cout <<"\t\t\t\t\t\t  TICKET MENU   				 \n"
          <<"\t\t\t\t\t\t================ 				 \n"
-         <<"\t\t\t\t\t1. Veiw all tickets				 \n"
+         <<"\t\t\t\t\t1. View all tickets				 \n"
          <<"\t\t\t\t\t2. Add Repair						 \n"
          <<"\t\t\t\t\t3. Exit							 \n"
          <<"\t\t\t\tEnter your choice: ";
@@ -187,7 +187,7 @@ int ticketMenu() {
     return(choice);
 }
 
-void cusMenu(Customer currUser, List<Ticket*>* tickets) {
+void cusMenu(Customer* currUser, List<Ticket*>* tickets) {
     int option;
     string name;
     string currName;
@@ -202,7 +202,7 @@ void cusMenu(Customer currUser, List<Ticket*>* tickets) {
             cout<<"What is the ticket for? ";
             getline(cin, comment);
             cout<<"Ticket Processed."<<endl;
-            tickets->addNode(new Ticket(currUser, comment));
+            tickets->addNode(new Ticket(*currUser, comment));
             saveTickets(tickets);
             break;
         case 2:
@@ -212,20 +212,46 @@ void cusMenu(Customer currUser, List<Ticket*>* tickets) {
     } while (option !=2);
 }
 
-void ticMenu(List<Ticket*>* tickets) {
+void repairMenu(Person* currUser, List<Ticket*>* tickets){
+    cout << "Ticket Number:" << endl;
+    tickets->printList();
+    int option;
+    float hW;
+    double tW;
+    std::string wC;
+    cout << "Enter here: ";
+    cin >> option;
+    Ticket* t = tickets->getNode(option-1);
+    cout << "Hours Worked: ";
+    cin >> hW;
+    cout << "Time Worked: ";
+    cin >> tW;
+    cout << "Work Completed: ";
+    cin.clear();
+    fflush(stdin);
+    getline(cin, wC);
+    cout << t;
+    t->addRepair(dynamic_cast<Employee*>(currUser), hW, tW, wC);
+    tickets->setNode(option-1, t);
+}
+
+void ticMenu(Person* currUser, List<Ticket*>* tickets) {
     int option;
     do {
         option = ticketMenu();
         switch(option) {
         case 1:
-                tickets->printList();
+            tickets->printList();
             break;
         case 2:
+            repairMenu(currUser, tickets);
+            break;
+        case 3:
             system("CLS");
             cout<<"Bye"<<endl;
             break;
         }
-    } while (option !=2);
+    } while (option !=3);
 }
 
 void empMenu(Person* currUser, List<Ticket*>* tickets) {
@@ -233,15 +259,15 @@ void empMenu(Person* currUser, List<Ticket*>* tickets) {
     do {
         option = employeeMenu();
         switch(option) {
-        case 1:
-            ticMenu(tickets);
-            break;
-        case 2:
-            system("CLS");
-            cout<<"Bye"<<endl;
-            break;
+            case 1:
+                ticMenu(currUser, tickets);
+                break;
+            case 2:
+                system("CLS");
+                cout<<"Bye"<<endl;
+                break;
         }
-    } while (option !=2);
+    } while (option !=3);
 }
 
 int main(int argc, char** argv) {
@@ -277,10 +303,9 @@ int main(int argc, char** argv) {
         return 0;
 
     if(auto temp = dynamic_cast<Customer*>(currentUser))
-        cusMenu(*temp, &tickets);
+        cusMenu(temp, &tickets);
     else
         empMenu(currentUser, &tickets);
-
 }
 
 

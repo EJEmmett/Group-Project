@@ -11,7 +11,7 @@ class Ticket {
     Ticket();
     Ticket(Customer, std::string);
 
-    void addRepair(Employee, float, double, std::string); // int hoursWorked
+    void addRepair(Employee*, float, double, std::string); // int hoursWorked
     List<Repairs*> getRepairs() const;
 
 

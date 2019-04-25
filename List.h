@@ -16,6 +16,8 @@ class List {
     List();
     ~List();
     void addNode(T);
+    T getNode(int);
+    void setNode(int, T);
     int getPos();
     T inList(std::string);
     float sumCost();

@@ -9,8 +9,8 @@
 class Repairs {
   public:
     Repairs();
-    Repairs(Employee, float, double, std::string);
-    Employee getEmployee() const;
+    Repairs(Employee*, float, double, std::string);
+    Employee* getEmployee() const;
     float getHours() const;
     std::string print();
     std::string getRep() const;
@@ -22,7 +22,7 @@ class Repairs {
     friend std::ostream& operator<<(std::ostream& os, const Repairs& r);
 
   private:
-    Employee emp;
+    Employee* emp;
     float hoursWorked;
     double timeWorked;
     std::string workCompleted;

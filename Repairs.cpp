@@ -7,14 +7,14 @@ Repairs::Repairs(){
     workCompleted = "";
 }
 
-Repairs::Repairs(Employee _emp, float hW, double tW, std::string wC) {
+Repairs::Repairs(Employee* _emp, float hW, double tW, std::string wC) {
     emp = _emp;
     hoursWorked = hW;
     timeWorked = tW;
     workCompleted = wC;
 }
 
-Employee Repairs::getEmployee() const {
+Employee* Repairs::getEmployee() const {
     return emp;
 }
 
@@ -26,7 +26,7 @@ std::string Repairs::print() {
     std::stringstream fHW;
     fHW << std::fixed << std::setprecision(2) << hoursWorked;
 
-    return "Employee: " + emp.print() +
+    return "Employee: " + emp->print() +
            "\nTime Worked: " + std::to_string(timeWorked) +
            "\nWork Completed: " + workCompleted +
            "\nHours Worked: " + fHW.str() + "\n";
@@ -35,7 +35,7 @@ std::string Repairs::print() {
 std::string Repairs::getRep() const{
     std::stringstream fHW;
     fHW << std::fixed << std::setprecision(2) << hoursWorked;
-    return emp.print() + " " + std::to_string(timeWorked) + " " + workCompleted + " " + fHW.str();
+    return emp->print() + " " + std::to_string(timeWorked) + " " + workCompleted + " " + fHW.str();
 
 }
 
