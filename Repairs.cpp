@@ -1,6 +1,6 @@
 #include "Repairs.h"
 
-Repairs::Repairs(Employee _emp, float hW, std::time_t tW, std::string wC) {
+Repairs::Repairs(Employee _emp, float hW, double tW, std::string wC) {
     emp = _emp;
     hoursWorked = hW;
     timeWorked = tW;

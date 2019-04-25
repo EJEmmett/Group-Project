@@ -6,18 +6,19 @@
 Ticket::Ticket() {
     client = nullptr;
     description = "";
-    timeEntered = std::time(nullptr);
+    timeEntered = 0;
     status = "Not Completed";
+    invo = nullptr;
 }
 
 Ticket::Ticket(Customer c, std::string d) {
     client = c;
     description = d;
-    timeEntered = std::time(nullptr);
+    timeEntered = 0;
     status = "Not Completed";
 }
 
-void Ticket::addRepair(Employee emp, float hoursWorked, std::time_t timeWorked, std::string workCompleted) {
+void Ticket::addRepair(Employee emp, float hoursWorked, double timeWorked, std::string workCompleted) {
     repairsCompleted.addNode(new Repairs(emp, hoursWorked, timeWorked, workCompleted));
 }
 
@@ -26,7 +27,7 @@ void Ticket::listRepairs() {
 }
 
 std::string Ticket::getCompletion() const {
-    return timeCompleted ? ctime(&*timeCompleted) : "Not Completed";
+    return timeCompleted ? std::to_string(timeCompleted) : "Not Completed";
 }
 
 Customer Ticket::getClient() const {
@@ -39,7 +40,7 @@ std::string Ticket::getStatus() const {
 
 Invoice Ticket::getInvoice() {
     if(!invo)
-        invo = Invoice(client, repairsCompleted.sumCost(), repairsCompleted.sumHours());
+        invo = new Invoice(client, repairsCompleted.sumCost(), repairsCompleted.sumHours());
     return *invo;
 }
 

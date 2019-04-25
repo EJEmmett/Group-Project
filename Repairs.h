@@ -8,7 +8,7 @@
 
 class Repairs {
   public:
-    Repairs(Employee, float, std::time_t, std::string);
+    Repairs(Employee, float, double, std::string);
     Employee getEmployee() const;
     float getHours() const;
     std::string print();
@@ -22,7 +22,7 @@ class Repairs {
   private:
     Employee emp;
     float hoursWorked;
-    std::time_t timeWorked;
+    double timeWorked;
     std::string workCompleted;
 };
 

@@ -22,11 +22,11 @@ Person* create(List<Person*>& users) {
     int acctType;
     string username;
     string password;
-    cout << "Username: " << endl;
+    cout << "Username: ";
     cin.clear();
     fflush(stdin);
     getline(cin, username);
-    cout<<"Password: "<<endl;
+    cout<<"Password: ";
     getline(cin, password);
     cout<<"Account Type: \n"
         <<"1. Customer \n"
@@ -36,8 +36,15 @@ Person* create(List<Person*>& users) {
     Person* user;
     if(acctType == 1)
         user = new Customer(username, password, string("Cus"+users.getPos()));
-    else
-        user = new Employee();
+    else{
+        int grade;
+        float rate;
+        cout<<"Pay Rate: ";
+        cin >> rate;
+        cout<<"Grade: ";
+        cin >> grade;
+        user = new Employee(username, password, string("Emp"+users.getPos()), grade, rate);
+    }
     users.addNode(user);
 
     return user;

@@ -8,8 +8,8 @@
 class Employee : public Person {
   public:
     Employee();
-    Employee(std::string, std::string, std::string, int, float);
     Employee(std::string[5]);
+    Employee(std::string, std::string, std::string, int, float);
     void setInfo(std::string, std::string, std::string, int, float);
     int getlvl() const;
     float getRate() const;

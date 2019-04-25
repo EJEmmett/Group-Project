@@ -4,12 +4,12 @@ Employee::Employee() {
     setInfo("", "", "", 0, 0.0);
 }
 
-Employee::Employee(std::string u, std::string p, std::string id, int i, float cost) {
-    setInfo(u, p, id, i, cost);
-}
-
 Employee::Employee(std::string vars[5]) {
     setInfo(vars[0], vars[1], vars[2], std::stoi(vars[3]), std::stof(vars[4]));
+}
+
+Employee::Employee(std::string u, std::string p, std::string id, int i, float cost) {
+    setInfo(u, p, id, i, cost);
 }
 
 void Employee::setInfo(std::string u, std::string p, std::string id, int i, float cost) {
