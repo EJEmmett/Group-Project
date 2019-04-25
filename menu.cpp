@@ -35,7 +35,7 @@ Person* create(List<Person*>& users) {
     cin >> acctType;
     Person* user;
     if(acctType == 1)
-        user = new Customer();
+        user = new Customer(username, password, string("Cus"+users.getPos()));
     else
         user = new Employee();
     users.addNode(user);
@@ -55,8 +55,6 @@ int loginMenu() {
     cin >>choice;
     return choice;
 }
-
-
 
 int menu() {
     int choice;
@@ -139,11 +137,11 @@ void cusMenu(Customer currUser, List<Ticket>& tickets) {
             getline(cin, comment);
             cout<<"Ticket Processed."<<endl;
             tickets.addNode(Ticket(currUser, comment));
-                            break;
-                        case 2:
-                                cout<<"Bye"<<endl;
-                                break;
-            }
+            break;
+        case 2:
+            cout<<"Bye"<<endl;
+            break;
+        }
     } while (option !=2);
 }
 
@@ -207,14 +205,14 @@ int main(int argc, char** argv) {
         option = loginMenu();
         system("CLS");
         switch(option) {
-            case 1:
-                if(Person* temp = login(users))
-                    currentUser = temp;
-                else{
-                    cout << "User not found.";
-                    system("pause");
-                }
-                break;
+        case 1:
+            if(Person* temp = login(users))
+                currentUser = temp;
+            else {
+                cout << "User not found.";
+                system("pause");
+            }
+            break;
         case 2:
             currentUser = create(users);
             break;
